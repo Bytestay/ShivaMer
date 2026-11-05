@@ -231,6 +231,15 @@ else:
             >
               bytestay.pt
             </a>
+            {" · "}
+            <a
+              href="https://bytestay.pt/privacy.html"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="underline hover:text-gray-300"
+            >
+              Privacy
+            </a>
           </p>
           <a
             href="https://github.com/bytestay/shivamer"
