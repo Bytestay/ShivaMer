@@ -1,5 +1,10 @@
 #  ShivaMer — Python → Mermaid Converter
 
+[![Backend CI](https://github.com/bytestay/ShivaMer/actions/workflows/backend.yml/badge.svg?branch=main)](https://github.com/bytestay/ShivaMer/actions/workflows/backend.yml)
+[![Deploy](https://github.com/bytestay/ShivaMer/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/bytestay/ShivaMer/actions/workflows/deploy.yml)
+[![Live app](https://img.shields.io/badge/app-shivamer.bytestay.pt-blue)](https://shivamer.bytestay.pt)
+[![License: MIT](https://img.shields.io/github/license/bytestay/ShivaMer)](LICENSE)
+
 **ShivaMer** is a web app that converts **Python code** into **Mermaid diagrams** in real time.  
 It helps you visualize logic flow from functions, conditions, and loops as flowcharts you can export to **PNG** or **.mmd**.
 
@@ -85,7 +90,7 @@ Backend → `http://localhost:8000`
 - **Frontend:** `.github/workflows/deploy.yml` builds on every PR and publishes to GitHub Pages
   (`shivamer.bytestay.pt`) on push to `main`.
 - **Backend:** `.github/workflows/backend.yml` runs ruff + pytest, then on `main` deploys
-  `backend/` to the Fly app `shivamer-backend` (`api-shivamer.bytestay.pt`) and runs a
+  `backend/` to the Fly app `bst-shivamer-backend` (`api-shivamer.bytestay.pt`) and runs a
   smoke test. The deploy step needs the `FLY_API_TOKEN` repository secret; without it the job
   skips with a warning and you can deploy by hand with `cd backend && flyctl deploy`.
 
