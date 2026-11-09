@@ -1,0 +1,12 @@
+User-agent: *
+Allow: /
+
+# ByteStay's own fetchers (Distill, Unfold, Peek, EnrichForge).
+# A group that names them wins over the crawler groups Cloudflare adds above.
+User-agent: DistillBot
+User-agent: UnfoldBot
+User-agent: PeekBot
+User-agent: EnrichForgeBot
+Allow: /
+
+Sitemap: https://shivamer.bytestay.pt/sitemap.xml
