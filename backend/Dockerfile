@@ -13,7 +13,9 @@ RUN apt-get update && apt-get upgrade -y --no-install-recommends && \
 
 # Install deps
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
+# pip is only needed for the build; removing it keeps its CVEs out of the image.
+RUN pip install --no-cache-dir -r requirements.txt && \
+    python3 -m pip uninstall -y pip
 
 # Copy app
 COPY . .
