@@ -108,6 +108,10 @@ Everyone follows the [code of conduct](https://github.com/bytestay/.github/blob/
 
 ---
 
+## History
+
+Formerly Hybrid Forge Lab. This repository continues `hybridforgelab/ShivaMer` under the ByteStay name since November 2026, so the older commits come from there.
+
 ## License
 
 This project is open-source under the **MIT License**.  
