@@ -35,6 +35,13 @@ updates:
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 3
+    # Majors (React 19, Vite 8, Tailwind 4, plugin-react 6) are a planned migration, not a monthly bump.
+    # monaco-editor stays on the range react-monaco-editor supports (peer ^0.52): its 0.x minors break the build.
+    ignore:
+      - dependency-name: "*"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "monaco-editor"
+        update-types: ["version-update:semver-minor"]
     commit-message:
       prefix: "chore(deps)"
     groups:
