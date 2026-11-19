@@ -1,4 +1,4 @@
-#  ShivaMer — Python → Mermaid Converter
+# ShivaMer: Python → Mermaid converter
 
 [![Backend CI](https://github.com/bytestay/ShivaMer/actions/workflows/backend.yml/badge.svg?branch=main)](https://github.com/bytestay/ShivaMer/actions/workflows/backend.yml)
 [![Deploy](https://github.com/bytestay/ShivaMer/actions/workflows/deploy.yml/badge.svg?branch=main)](https://github.com/bytestay/ShivaMer/actions/workflows/deploy.yml)
