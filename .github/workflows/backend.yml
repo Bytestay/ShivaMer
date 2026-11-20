@@ -39,23 +39,31 @@ jobs:
     environment:
       name: production
       url: https://api-shivamer.bytestay.pt/healthz
-    env:
-      FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v7
+        with:
+          persist-credentials: false
       - name: Check deploy token
         id: token
+        env:
+          HAS_FLY_TOKEN: ${{ secrets.FLY_API_TOKEN != '' }}
         run: |
-          if [ -z "$FLY_API_TOKEN" ]; then
+          if [ "$HAS_FLY_TOKEN" != "true" ]; then
             echo "::warning::FLY_API_TOKEN secret not set, skipping deploy (deploy manually with flyctl)."
             echo "present=false" >> "$GITHUB_OUTPUT"
           else
             echo "present=true" >> "$GITHUB_OUTPUT"
           fi
-      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - uses: superfly/flyctl-actions/setup-flyctl@ed8efb33836e8b2096c7fd3ba1c8afe303ebbff1 # 1.6
         if: steps.token.outputs.present == 'true'
+        with:
+          version: "0.5.14"
       - name: Deploy to Fly
         if: steps.token.outputs.present == 'true'
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
         run: flyctl deploy --remote-only --app bst-shivamer-backend
       - name: Smoke test
         if: steps.token.outputs.present == 'true'
