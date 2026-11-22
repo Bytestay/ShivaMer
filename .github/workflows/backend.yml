@@ -64,7 +64,8 @@ jobs:
         if: steps.token.outputs.present == 'true'
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-        run: flyctl deploy --remote-only --app bst-shivamer-backend
+        # A new APT_REFRESH busts the apt-get upgrade layer, so each deploy ships that day's Debian fixes.
+        run: flyctl deploy --remote-only --app bst-shivamer-backend --build-arg APT_REFRESH=${{ github.run_id }}-${{ github.run_attempt }}
       - name: Smoke test
         if: steps.token.outputs.present == 'true'
         run: |
