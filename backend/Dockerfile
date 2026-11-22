@@ -6,8 +6,12 @@ ENV PYTHONDONTWRITEBYTECODE=1 \
 
 WORKDIR /app
 
-# System deps (optional minimal) and Debian security updates newer than the base image
-RUN apt-get update && apt-get upgrade -y --no-install-recommends && \
+# System deps (optional minimal) and Debian security updates newer than the base image.
+# APT_REFRESH changes on every deploy (the workflow passes the run id), so the remote
+# builder never reuses a cached upgrade layer from an older day.
+ARG APT_REFRESH=manual
+RUN echo "apt refresh: ${APT_REFRESH}" && \
+    apt-get update && apt-get upgrade -y --no-install-recommends && \
     apt-get install -y --no-install-recommends \
     curl ca-certificates && rm -rf /var/lib/apt/lists/*
 
