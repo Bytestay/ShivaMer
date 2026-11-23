@@ -50,7 +50,8 @@ pytest -q && ruff check .
 ```
 
 The API only accepts browser requests from the origins in `ALLOWED_ORIGINS`
-(comma separated; defaults to the production site plus `localhost:5173`/`8080`).
+(comma separated; defaults to the production site, plus `localhost:5173`/`8080` unless
+`ENVIRONMENT=production`, which is also what turns off `/docs` and `/redoc`). Bodies above 64 KB get a 413.
 
 Then open: [http://localhost:5173](http://localhost:5173)
 

@@ -200,3 +200,37 @@ def test_cors_only_allows_known_origins():
         "/convert", headers={"Origin": "https://evil.example", "Access-Control-Request-Method": "POST"}
     )
     assert "access-control-allow-origin" not in bad.headers
+
+
+def test_body_over_64kb_gets_413():
+    big = b'{"code": "' + b"x" * 70_000 + b'"}'
+    r = client.post("/convert", content=big, headers={"Content-Type": "application/json"})
+    assert r.status_code == 413
+
+
+def test_streamed_body_without_content_length_gets_413():
+    def chunks():
+        for _ in range(10):
+            yield b"x" * 10_000
+
+    r = client.post("/convert", content=chunks(), headers={"Content-Type": "application/json"})
+    assert r.status_code == 413
+
+
+def test_production_cors_has_no_localhost_and_no_docs(monkeypatch):
+    from main import make_app
+
+    monkeypatch.delenv("ALLOWED_ORIGINS", raising=False)
+    prod = TestClient(make_app(True))
+    ok = prod.options(
+        "/convert",
+        headers={"Origin": "https://shivamer.bytestay.pt", "Access-Control-Request-Method": "POST"},
+    )
+    assert ok.headers["access-control-allow-origin"] == "https://shivamer.bytestay.pt"
+    local = prod.options(
+        "/convert", headers={"Origin": "http://localhost:5173", "Access-Control-Request-Method": "POST"}
+    )
+    assert "access-control-allow-origin" not in local.headers
+    for path in ("/docs", "/redoc", "/openapi.json"):
+        assert prod.get(path).status_code == 404
+    assert client.get("/docs").status_code == 200
