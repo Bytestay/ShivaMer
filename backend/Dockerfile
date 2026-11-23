@@ -21,8 +21,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt && \
     python3 -m pip uninstall -y pip
 
-# Copy app
+# Copy app and run it without root
 COPY . .
+RUN useradd --system --uid 10001 --no-create-home app
+USER app
 
 EXPOSE 8000
 
